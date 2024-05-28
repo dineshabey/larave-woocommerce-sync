@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->double('price', 8, 2); // Product price, double data type
             $table->text('description'); // Product description
             $table->string('image_filename')->nullable(); // Image filename, nullable
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Foreign key to users table
+            // $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Foreign key to users table
             $table->timestamps(); // created_at and updated_at timestamps
         });
     }
