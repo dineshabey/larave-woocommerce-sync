@@ -4,16 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Jobs\DownloadProductImage;
 use App\Models\Product;
-use GuzzleHttp\Client;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class WooCommerceController extends Controller
 {
     public function syncProducts()
     {
-
         // WooCommerce API credentials
         $consumerKey = 'ck_547cc1e0c953c44c4744cd29466ad2ba65a658d6';
         $consumerSecret = 'cs_c8973040acc5d8f4c581d67d611f03d5b3eb733d';
@@ -28,24 +27,44 @@ class WooCommerceController extends Controller
             $products = $response->json();
             $userId = Auth::id(); // Get the logged-in user's ID
 
+            $syncedProducts = [];
+
             foreach ($products as $productData) {
                 $product = Product::updateOrCreate(
-                    ['woocommerce_id' => $productData['id']],
+                    [
+                        'woocommerce_id' => $productData['id']
+                    ],
                     [
                         'name' => $productData['name'],
                         'price' => $productData['price'],
                         'description' => $productData['description'],
-                        'image_url' => $productData['images'][0]['src'] ?? null,
+                        'user_id' => $userId // Assign the user ID
                     ]
                 );
 
+                $imageUrl = count($productData['images']) > 0 ? $productData['images'][0]['src'] : null;
+
                 // Dispatch the job to download the product image
-                DownloadProductImage::dispatch($product);
+                DownloadProductImage::dispatch($product, $imageUrl);
+
+                $syncedProducts[] = $product->toArray();
             }
 
-            return response()->json(['status' => 'success', 'message' => 'Products synced successfully.']);
+            Log::info('Products synced successfully', ['user_id' => $userId, 'products' => $syncedProducts]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Products synced successfully. Image download jobs dispatched.',
+                'data' => $syncedProducts
+            ]);
         }
 
-        return response()->json(['status' => 'error', 'message' => 'Failed to sync products.'], 500);
+        Log::error('Failed to sync products', ['response' => $response->body()]);
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Failed to sync products.',
+            'error' => $response->body()
+        ], 500);
     }
 }

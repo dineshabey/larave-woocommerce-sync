@@ -13,7 +13,7 @@ class Product extends Model
         'price',
         'description',
         // 'image_url',
-        'user_id',
+        'woocommerce_id',
         'image_filename'
     ];
 }
