@@ -1,66 +1,95 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+## 👨🏼‍💻 Laravel WooCommerce Sync Project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Objective
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This project is developed as part of the PHP (Laravel) Developer Challenge V 3.0. The aim is to sync products from a WooCommerce shop using the WooCommerce REST API and store the product details in a local MySQL database. Additionally, it includes an API to register users, login, fetch products, and sync products.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Table of Contents
 
-## Learning Laravel
+- Requirements
+- Installation
+- Configuration
+- Running the Project
+- API Endpoints
+- Sync Process
+- Queue Job
+- Notes
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Requirements
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- PHP 8.x
+- Composer
+- MySQL
+- Laravel 9.x
+- WooCommerce Shop Credentials
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Installation
 
-## Laravel Sponsors
+#### 1.Clone the repository:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+git clone https://github.com/your-username/laravel-woocommerce-sync.git
+cd laravel-woocommerce-sync
 
-### Premium Partners
+#### 2.Install dependencies:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+composer install
 
-## Contributing
+#### 3.Create a .env file:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+cp .env.example .env
 
-## Code of Conduct
+#### 4.Generate an application key:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+php artisan key:generate
 
-## Security Vulnerabilities
+#### 5.Set up your database in the .env file:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_database_username
+DB_PASSWORD=your_database_password
 
-## License
+#### 6.Run the migrations to create the required tables:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+php artisan migrate
+
+### Configuration
+
+- Update the WooCommerce credentials in the .env file:
+
+WOOCOMMERCE_SHOP_URL=https://tests.kodeia.com/wordpress/wp-json/wc/v3/products
+WOOCOMMERCE_CONSUMER_KEY=ck_547cc1e0c953c44c4744cd29466ad2ba65a658d6
+WOOCOMMERCE_CONSUMER_SECRET=cs_c8973040acc5d8f4c581d67d611f03d5b3eb733d
+
+### Running the Project
+
+#### 1.Start the Laravel development server:
+
+php artisan serve
+
+#### 2.Run the queue worker:
+
+php artisan queue:work
+
+### API Endpoints
+
+- Refer to API full document
+
+### Sync Process
+
+- The sync process fetches the first 15 products from the WooCommerce shop and stores them in the local database. It also downloads the product images and saves them with random filenames.
+
+### Queue Job
+
+- The queue job is responsible for downloading product images and updating the image_filename column in the database.
+
+### Notes
+
+- Ensure the queue worker is running to process the image download jobs.
+- If you face any issues, check the Laravel logs in storage/logs/laravel.log.
+
+
