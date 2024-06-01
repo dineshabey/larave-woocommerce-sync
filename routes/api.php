@@ -16,4 +16,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/sync-products', [WooCommerceController::class, 'syncProducts']); // Protected route for syncing products
 });
 
-// Route::get('products', [WooCommerceController::class, 'getProducts']);
+
+
