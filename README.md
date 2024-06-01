@@ -85,7 +85,16 @@ php artisan queue:work
 
 ### API Endpoints
 
-- Refer to API full document
+- Refer to API full document:https://drive.google.com/file/d/1BugHX6qejQHaMLQD4JOqXv4u6ZH5Em6L/view?usp=drive_link
+- Json API cpllection : https://drive.google.com/file/d/1kp_wtTzIXA7N6qCwbHFzQ7Ep-htAADJ7/view?usp=drive_link
+
+### Steps to Import the Collection:
+
+1. Open Postman. https://www.postman.com/
+2. Click on the `Import` button in the top left corner.
+3. Select the `Upload Files` tab.
+4. Choose the attached JSON file and click `Open`.
+5. The collection will be imported into your Postman.
 
 ### Sync Process
 
