@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Config;
 
 class WooCommerceController extends Controller
 {
@@ -25,10 +26,11 @@ class WooCommerceController extends Controller
             ], 401);
         }
 
-        // WooCommerce API credentials
-        $consumerKey = 'ck_547cc1e0c953c44c4744cd29466ad2ba65a658d6';
-        $consumerSecret = 'cs_c8973040acc5d8f4c581d67d611f03d5b3eb733d';
-        $shopUrl = 'https://tests.kodeia.com/wordpress/wp-json/wc/v3/products';
+
+        // Get WooCommerce API credentials from the config
+        $shopUrl = config('app.woocommerce.shop_url');
+        $consumerKey = config('app.woocommerce.consumer_key');
+        $consumerSecret = config('app.woocommerce.consumer_secret');
 
         // Create a Guzzle client
         $client = new Client();

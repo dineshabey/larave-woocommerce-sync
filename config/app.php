@@ -58,6 +58,14 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+
+    'woocommerce' => [
+        'shop_url' => env('WOOCOMMERCE_SHOP_URL'),
+        'consumer_key' => env('WOOCOMMERCE_CONSUMER_KEY'),
+        'consumer_secret' => env('WOOCOMMERCE_CONSUMER_SECRET'),
+    ],
+
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
