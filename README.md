@@ -29,8 +29,9 @@ This project is developed as part of the PHP (Laravel) Developer Challenge V 3.0
 
 #### 1.Clone the repository:
 
-git clone https://github.com/your-username/laravel-woocommerce-sync.git
-cd laravel-woocommerce-sync
+- git clone https://github.com/dineshabey/larave-woocommerce-sync.git
+
+- cd laravel-woocommerce-sync
 
 #### 2.Install dependencies:
 
@@ -45,6 +46,8 @@ cp .env.example .env
 php artisan key:generate
 
 #### 5.Set up your database in the .env file:
+
+- Update .env 
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
