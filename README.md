@@ -31,7 +31,7 @@ This project is developed as part of the PHP (Laravel) Developer Challenge V 3.0
 
 - git clone https://github.com/dineshabey/larave-woocommerce-sync.git
 
-- cd laravel-woocommerce-sync
+- cd larave-woocommerce-sync
 
 #### 2.Install dependencies:
 
